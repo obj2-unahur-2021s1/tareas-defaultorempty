@@ -57,4 +57,36 @@ class TareaTest : DescribeSpec({
         }
     }
 
+    describe("Una tarea Integracion con una tarea simple y otra de integracion") {
+
+        var responsableIntgracion = Empleado(500.0)
+        var responsable = Empleado(400.0)
+        var empleadoUno = Empleado(300.0)
+        var empleadoDos = Empleado(300.0)
+
+        var listaDeEmpleadosTareaSimple = mutableListOf<Empleado>()
+        listaDeEmpleadosTareaSimple.add(empleadoUno)
+        listaDeEmpleadosTareaSimple.add(empleadoDos)
+
+        var tareaSimple = TareaSimple(100, responsable, listaDeEmpleadosTareaSimple, 50000)
+        var tareaIntegracion = TareaIntegracion(responsableIntgracion)
+        var tareaIntegracion2 = TareaIntegracion(responsableIntgracion)
+        tareaIntegracion2.listaDeTareas.add(tareaSimple)
+
+        tareaIntegracion.listaDeTareas.add(tareaSimple)
+        tareaIntegracion.listaDeTareas.add(tareaIntegracion2)
+
+        it("dar nomina de empleados") {
+            tareaIntegracion.darNominaDeEmpleados().count().shouldBe(9)
+        }
+
+        it("calcular cantidad de horas necesarias para finalizar la tarea") {
+            tareaIntegracion.horasNecesariasParaFinalizarTarea().shouldBe(119)
+        }
+
+        it("obtener el costo de una tarea") {
+            tareaIntegracion.costoDeUnaTarea().shouldBe(250908)
+        }
+    }
+
 })

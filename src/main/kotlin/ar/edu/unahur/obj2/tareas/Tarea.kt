@@ -35,6 +35,31 @@ class TareaSimple(
 
 }
 
+
+class TareaIntegracion(var responsable: Empleado ):ITarea{
+
+    var listaDeTareas = mutableListOf<ITarea>()
+
+    override fun horasNecesariasParaFinalizarTarea(): Int {
+        return listaDeTareas.sumBy { it.horasNecesariasParaFinalizarTarea() } + (listaDeTareas.sumBy { it.horasNecesariasParaFinalizarTarea() }/8)
+    }
+
+    override fun costoDeUnaTarea(): Double {
+        return listaDeTareas.sumByDouble { it.costoDeUnaTarea() } + ( listaDeTareas.sumByDouble { it.costoDeUnaTarea() }*0.03 )
+    }
+
+    override fun calcularSalarioTotalDeEmpleados(): Double {
+        return listaDeTareas.sumByDouble { it.calcularSalarioTotalDeEmpleados() }
+    }
+
+    override fun darNominaDeEmpleados(): MutableList<Empleado> {
+        var listaCompleta = listaDeTareas.flatMap { it.darNominaDeEmpleados() }.toMutableList()
+        listaCompleta.add(responsable)
+        return listaCompleta
+    }
+
+}
+
 class Empleado(var cobraPorHora: Double) {
     fun saberCuantoCobraPorHora(): Double = cobraPorHora
     fun calcularCuantoCobraPorCantidadDeHorasTrabajadas(cantidadDeHoras: Int): Double {

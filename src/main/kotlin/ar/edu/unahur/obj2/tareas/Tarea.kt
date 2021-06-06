@@ -13,9 +13,7 @@ class TareaSimple(
     var empleados: MutableList<Empleado>,
     val costoInfraestructura: Int
 ) : ITarea {
-    override fun horasNecesariasParaFinalizarTarea(): Int {
-        return cantidadHorasEstimadas / empleados.size
-    }
+    override fun horasNecesariasParaFinalizarTarea() = cantidadHorasEstimadas / empleados.size
 
     override fun costoDeUnaTarea(): Double {
         return costoInfraestructura + this.calcularSalarioTotalDeEmpleados() + responsable.calcularCuantoCobraPorCantidadDeHorasTrabajadas(
@@ -43,9 +41,7 @@ class TareaIntegracion(val responsable: Empleado) : ITarea {
         return listaDeTareas.sumBy { it.horasNecesariasParaFinalizarTarea() } + (listaDeTareas.sumBy { it.horasNecesariasParaFinalizarTarea() } / 8)
     }
 
-    override fun costoDeUnaTarea(): Double {
-        return costoSubTareas() + bonus()
-    }
+    override fun costoDeUnaTarea() = costoSubTareas() + bonus()
 
     fun costoSubTareas() = listaDeTareas.sumByDouble { it.costoDeUnaTarea() }
     fun bonus() = costoSubTareas() * 0.03

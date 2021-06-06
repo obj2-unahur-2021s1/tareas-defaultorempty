@@ -8,10 +8,10 @@ interface ITarea {
 }
 
 class TareaSimple(
-    var cantidadHorasEstimadas: Int,
-    var responsable: Empleado,
+    val cantidadHorasEstimadas: Int,
+    val responsable: Empleado,
     var empleados: MutableList<Empleado>,
-    var costoInfraestructura: Int
+    val costoInfraestructura: Int
 ) : ITarea {
     override fun horasNecesariasParaFinalizarTarea(): Int {
         return cantidadHorasEstimadas / empleados.size
@@ -36,7 +36,7 @@ class TareaSimple(
 }
 
 
-class TareaIntegracion(var responsable: Empleado ):ITarea{
+class TareaIntegracion(val responsable: Empleado ):ITarea{
 
     var listaDeTareas = mutableListOf<ITarea>()
 
